@@ -1,5 +1,8 @@
-import * as crypto from 'crypto';
-import { BeforeInsert, Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import {
+  BeforeInsert, Entity,
+  Column, PrimaryGeneratedColumn, OneToMany
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -47,8 +50,8 @@ export class User {
 
   @BeforeInsert()
   hashPassword() {
-    const hashedPassword = crypto.pbkdf2Sync(this.password, 'salt', 100000, 512, 'sha512')
-    this.password = hashedPassword.toString('base64');
+    const hashedPassword = bcrypt.hashSync(this.password, 10);
+    this.password = hashedPassword;
 
     this.dateCreated = new Date();
   }
