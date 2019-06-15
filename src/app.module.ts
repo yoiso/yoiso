@@ -8,8 +8,6 @@ import { User } from './user/user.entity';
 import { Oauth2Module } from './oauth2/oauth2.module';
 import ormconfig = require('./ormconfig');
 
-console.log(ormconfig);
-
 @Module({
   imports: [TypeOrmModule.forRoot(ormconfig), UserModule, Oauth2Module],
   controllers: [AppController],

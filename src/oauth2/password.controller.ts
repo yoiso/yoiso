@@ -19,7 +19,12 @@ export class PasswordController {
 
     switch (grantType) {
       case 'password':
-        await this.passwordGrant(reqTokenDto, res);
+        try{
+          const token = await this.passwordGrant(reqTokenDto, res);
+          res.code(201).send({token});
+        } catch(e) {
+          res.code(400).send({error: e.message});
+        }
         break;
     }
 
@@ -27,19 +32,15 @@ export class PasswordController {
   }
 
   async passwordGrant(reqTokenDto: RequestTokenDto, res) {
-    try {
-      const client = await this.oauth2Service.checkClient(reqTokenDto.client_id, reqTokenDto.client_secret);
-      const user = await this.oauth2Service.checkUser(reqTokenDto.username, reqTokenDto.password);
-      let token = await this.oauth2Service.isHasToken(user.id);
+    const client = await this.oauth2Service.checkClient(reqTokenDto.client_id, reqTokenDto.client_secret);
+    const user = await this.oauth2Service.checkUser(reqTokenDto.username, reqTokenDto.password);
+    let token = await this.oauth2Service.isHasToken(user.id);
 
-      if ((client && user) && !token) {
-        token = await this.oauth2Service.generateToken();
-        await this.oauth2Service.saveToken(token, user.id);
-      }
-
-      res.code(201).send({token});
-    } catch(e) {
-      res.code(400).send({error: e.message});
+    if ((client && user) && !token) {
+      token = await this.oauth2Service.generateToken();
+      await this.oauth2Service.saveToken(token, user.id);
     }
+
+    return token;
   }
 }
