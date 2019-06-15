@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import {
   BeforeInsert, Entity,
-  Column, PrimaryGeneratedColumn, OneToMany
+  Column, PrimaryGeneratedColumn
 } from 'typeorm';
 
 @Entity()
