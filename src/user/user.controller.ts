@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
@@ -15,8 +15,15 @@ export class UserController {
   }
 
   @Post()
-  register(@Body() registerUserDto: RegisterUserDto) {
-    return this.userService.register(registerUserDto);
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    const user = await this.userService.register(registerUserDto);
+    this.userService.sendVerificationEmail(user);
+    return user;
+  }
+
+  @Get('/emailVerifications')
+  async verifyEmail(@Query() query) {
+    return this.userService.verifyEmail(query);
   }
 
 }
