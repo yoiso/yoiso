@@ -12,7 +12,6 @@ async function bootstrap() {
     new FastifyAdapter()
   );
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
 
   const options = new DocumentBuilder()
     .setTitle('yusosia example')
@@ -23,6 +22,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  app.enableCors({origin: '*'});
+
+  await app.listen(3030);
 }
 bootstrap();
