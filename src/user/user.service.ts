@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MailerService } from '@nest-modules/mailer';
+import { ConfigService } from '../config.service';
 import { User } from './user.entity';
 import { AccountVerification } from './account-verification.entity';
 
@@ -12,10 +13,12 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(AccountVerification)
     private readonly accountRepository: Repository<AccountVerification>,
-    private readonly mailerService: MailerService
+    private readonly mailerService: MailerService,
+    public config: ConfigService
   ) {}
 
   findAll(): Promise<User[]> {
+    console.log(this.config.get('TES'));
     return this.userRepository.find();
   }
 
