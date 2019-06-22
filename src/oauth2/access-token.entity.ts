@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class AccessToken {
@@ -9,6 +10,7 @@ export class AccessToken {
   @Column('text')
   access_token: string;
 
-  @Column()
-  user_id: number;
+  @OneToOne(type => User)
+  @JoinColumn()
+  user: User;
 }

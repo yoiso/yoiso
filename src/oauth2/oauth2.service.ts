@@ -40,12 +40,12 @@ export class Oauth2Service {
   async saveToken(token, userId) {
     const accessToken = new AccessToken();
     accessToken.access_token = token;
-    accessToken.user_id = userId;
+    accessToken.user = userId;
     await this.accessTokenRepo.save(accessToken);
   }
 
   async isHasToken(userId) {
-    const token = await this.accessTokenRepo.findOne({user_id: userId});
+    const token = await this.accessTokenRepo.findOne({user: userId});
 
     if (token) {
       return token.access_token;
