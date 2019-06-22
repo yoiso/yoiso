@@ -37,6 +37,7 @@
     "dotenv": "^8.0.0",
     "fastify-swagger": "^2.4.0",
     "mysql": "^2.17.1",
+    "nestjs-config": "^1.4.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",

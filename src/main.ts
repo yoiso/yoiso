@@ -1,10 +1,17 @@
 import 'reflect-metadata';
+import * as path from 'path';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-
+import { ConfigService } from 'nestjs-config';
 import { AppModule } from './app.module';
+
+function getConfig() {
+  return (ConfigService as any).loadConfigSync(
+    path.join(__dirname, './config/*.{ts,js}'),
+  );
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -24,6 +31,7 @@ async function bootstrap() {
 
   app.enableCors({origin: '*'});
 
-  await app.listen(3030);
+  const config = getConfig();
+  await app.listen(config.app.port);
 }
 bootstrap();

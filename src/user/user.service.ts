@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MailerService } from '@nest-modules/mailer';
-import { ConfigService } from '../config.service';
+import { ConfigService } from 'nestjs-config';
 import { User } from './user.entity';
 import { AccountVerification } from './account-verification.entity';
 
@@ -18,7 +18,6 @@ export class UserService {
   ) {}
 
   findAll(): Promise<User[]> {
-    console.log(this.config.get('TES'));
     return this.userRepository.find();
   }
 
