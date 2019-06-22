@@ -1,4 +1,3 @@
-import * as path from 'path';
 import { ConfigModule } from 'nestjs-config';
 import { Module } from '@nestjs/common';
 import { HandlebarsAdapter, MailerModule } from '@nest-modules/mailer';
@@ -7,8 +6,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { Oauth2Module } from './oauth2/oauth2.module';
-import { BalanceModule } from './balance/balance.module';
 import { ConfigService } from 'nestjs-config';
+import { DailyBalanceModule } from './daily-balance/daily-balance.module';
+import * as path from 'path';
 import ormconfig = require('./ormconfig');
 
 @Module({
@@ -30,7 +30,7 @@ import ormconfig = require('./ormconfig');
       }),
       inject: [ConfigService]
     }),
-    BalanceModule
+    DailyBalanceModule
   ],
   controllers: [AppController],
   providers: [AppService],
