@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from './config.module';
 import { Oauth2Module } from './oauth2/oauth2.module';
+import { BalanceModule } from './balance/balance.module';
 import ormconfig = require('./ormconfig');
 
 @Module({
@@ -28,7 +29,8 @@ import ormconfig = require('./ormconfig');
           }
         }
       })
-    })
+    }),
+    BalanceModule
   ],
   controllers: [AppController],
   providers: [AppService],
