@@ -1,8 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import {
   BeforeInsert, Entity,
-  Column, PrimaryGeneratedColumn
+  Column, PrimaryGeneratedColumn, OneToMany
 } from 'typeorm';
+import { DailyBalance } from '../daily-balance/daily-balance.entity';
 
 @Entity()
 export class User {
@@ -48,6 +49,9 @@ export class User {
   })
   dateDeleted: Date;
 
+  @OneToMany(type => DailyBalance, dailyBalance => dailyBalance.user)
+  dailyBalances: DailyBalance[];
+
   @BeforeInsert()
   hashPassword() {
     const hashedPassword = bcrypt.hashSync(this.password, 10);
@@ -55,4 +59,5 @@ export class User {
 
     this.dateCreated = new Date();
   }
+
 }

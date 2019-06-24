@@ -42,6 +42,9 @@ export class AppModule implements NestModule {
     consumer
       .apply(Oauth2Middleware)
       .exclude({ path: 'token', method: RequestMethod.POST })
-      .forRoutes({ path: 'users', method: RequestMethod.ALL});
+      .forRoutes(
+        { path: 'users', method: RequestMethod.ALL },
+        { path: 'dailyBalances', method: RequestMethod.ALL }
+      );
   }
 }
