@@ -16,4 +16,8 @@ export class DailyBalanceService {
     dailyBalance.user = user;
     return this.dailyBalanceRepo.save(dailyBalance);
   }
+
+  getByToken(token) {
+    return this.dailyBalanceRepo.find({ user: token.user });
+  }
 }

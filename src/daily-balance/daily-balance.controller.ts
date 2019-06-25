@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req } from '@nestjs/common';
+import { Controller, Post, Body, Req, Get } from '@nestjs/common';
 import { DailyBalanceService } from './daily-balance.service';
 import { CreateDailyBalanceDto } from './dto/create-daily-balance.dto';
 import { AccessToken } from '../oauth2/access-token.decorator';
@@ -18,5 +18,10 @@ export class DailyBalanceController {
   ) {
     const user = accessToken.user;
     return this.dailyBalanceService.create(createDailyBalanceDto, user);
+  }
+
+  @Get()
+  getByToken(@AccessToken() accessToken) {
+    return this.dailyBalanceService.getByToken(accessToken);
   }
 }
