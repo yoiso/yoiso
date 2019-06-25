@@ -1,15 +1,14 @@
 import { ConfigModule } from 'nestjs-config';
 import { Module, NestModule, RequestMethod, MiddlewareConsumer } from '@nestjs/common';
 import { HandlebarsAdapter, MailerModule } from '@nest-modules/mailer';
-import { AppController } from './app.controller';
 import { UserController } from './user/user.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { Oauth2Module } from './oauth2/oauth2.module';
 import { Oauth2Middleware } from './oauth2/oauth2.middleware';
 import { ConfigService } from 'nestjs-config';
 import { DailyBalanceModule } from './daily-balance/daily-balance.module';
+import { MeModule } from './me/me.module';
 import * as path from 'path';
 import ormconfig = require('./ormconfig');
 
@@ -32,10 +31,9 @@ import ormconfig = require('./ormconfig');
       }),
       inject: [ConfigService]
     }),
-    DailyBalanceModule
+    DailyBalanceModule,
+    MeModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -44,7 +42,8 @@ export class AppModule implements NestModule {
       .exclude({ path: 'token', method: RequestMethod.POST })
       .forRoutes(
         { path: 'users', method: RequestMethod.ALL },
-        { path: 'dailyBalances', method: RequestMethod.ALL }
+        { path: 'dailyBalances', method: RequestMethod.ALL },
+        { path: 'me', method: RequestMethod.ALL },
       );
   }
 }
