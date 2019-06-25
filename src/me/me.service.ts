@@ -12,7 +12,6 @@ export class MeService {
     private readonly dailyBalanceRepo: Repository<DailyBalance>) {}
 
   async getMe(token) {
-    console.log(token)
     const { accessToken, user } = token;
     const dailyBalance = await this.dailyBalanceRepo.find({ user: user});
     return { accessToken, user, dailyBalance };
