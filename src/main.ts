@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
 
 function getConfig() {
   return (ConfigService as any).loadConfigSync(
-    path.join(__dirname, './config/*.{ts,js}'),
+    path.join(__dirname, './config/!(*.d).{ts,js}'),
   );
 }
 
