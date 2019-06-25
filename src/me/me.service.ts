@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Connection, EntityManager } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DailyBalance } from '../daily-balance/daily-balance.entity'
