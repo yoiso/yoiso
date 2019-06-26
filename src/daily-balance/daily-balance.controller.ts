@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Get } from '@nestjs/common';
+import { Controller, Post, Body, Req, Get, Query } from '@nestjs/common';
 import { DailyBalanceService } from './daily-balance.service';
 import { CreateDailyBalanceDto } from './dto/create-daily-balance.dto';
 import { AccessToken } from '../oauth2/access-token.decorator';
@@ -21,7 +21,12 @@ export class DailyBalanceController {
   }
 
   @Get()
-  getByToken(@AccessToken() accessToken) {
+  getByToken(@AccessToken() accessToken, @Query() query) {
+    if (Object.hasOwnProperty.bind(query)('date')) {
+      const user = accessToken.user;
+      const date = query.date;
+      return this.dailyBalanceService.getByDateForLoggedInUser(user, date);
+    }
     return this.dailyBalanceService.getByToken(accessToken);
   }
 }

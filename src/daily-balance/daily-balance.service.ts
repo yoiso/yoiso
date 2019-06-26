@@ -20,4 +20,14 @@ export class DailyBalanceService {
   getByToken(token) {
     return this.dailyBalanceRepo.find({ user: token.user });
   }
+
+  getByDateForLoggedInUser(user, date) {
+    const dateLimit = `${date} 23:59:59.9`;
+
+    return this.dailyBalanceRepo
+      .query(
+        'SELECT * FROM daily_balance WHERE userId = ? AND `date` BETWEEN ? AND ?',
+        [user.id, date, dateLimit]
+      );
+  }
 }

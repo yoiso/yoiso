@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, Index } from 'typeorm';
 import { User } from '../user/user.entity';
 
 export enum BalanceType {
@@ -25,8 +25,10 @@ export class DailyBalance {
   type: BalanceType;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+  @Index()
   date: Date;
 
   @ManyToOne(type => User, user => user.dailyBalances)
+  @Index()
   user: User;
 }
