@@ -17,7 +17,7 @@ import ormconfig = require('./ormconfig');
     TypeOrmModule.forRoot(ormconfig),
     UserModule,
     Oauth2Module,
-    ConfigModule.load(path.resolve(__dirname, 'config', '**/*.{js,(!d).ts}')),
+    ConfigModule.load(path.resolve(__dirname, 'config', '**/!(*.d).{ts,js}')),
     MailerModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
         transport: config.get('app.mailer'),
