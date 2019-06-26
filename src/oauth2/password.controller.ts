@@ -1,7 +1,9 @@
 import { Controller, Post, Delete, Body, Res, Headers } from '@nestjs/common';
+import { ApiUseTags } from '@nestjs/swagger';
 import { RequestTokenDto } from './dto/request-token.dto';
 import { Oauth2Service } from './oauth2.service';
 
+@ApiUseTags('token')
 @Controller('token')
 export class PasswordController {
 

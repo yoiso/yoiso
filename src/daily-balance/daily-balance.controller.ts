@@ -1,8 +1,10 @@
 import { Controller, Post, Body, Req, Get, Query } from '@nestjs/common';
+import { ApiUseTags } from '@nestjs/swagger';
 import { DailyBalanceService } from './daily-balance.service';
 import { CreateDailyBalanceDto } from './dto/create-daily-balance.dto';
 import { AccessToken } from '../oauth2/access-token.decorator';
 
+@ApiUseTags('dailyBalances')
 @Controller('dailyBalances')
 export class DailyBalanceController {
 
