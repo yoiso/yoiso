@@ -138,17 +138,25 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">src/user/user.controller.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="19"
+                            class="link-to-prism">src/user/user.controller.ts:19</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Get users.</p>
+</div>
 
+                    <div>
+                    </div>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>the array of User</p>
 
                     </div>
                 </td>
@@ -186,14 +194,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="23"
-                            class="link-to-prism">src/user/user.controller.ts:23</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="29"
+                            class="link-to-prism">src/user/user.controller.ts:29</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Register a user.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -228,7 +238,8 @@
 
                     </div>
                     <div class="io-description">
-                        
+                        <p>the user</p>
+
                     </div>
                 </td>
             </tr>
@@ -265,14 +276,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">src/user/user.controller.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="41"
+                            class="link-to-prism">src/user/user.controller.ts:41</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>verify user email.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -303,7 +316,8 @@
 
                     </div>
                     <div class="io-description">
-                        
+                        <p>the message for verification</p>
+
                     </div>
                 </td>
             </tr>
@@ -326,13 +340,19 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
+  /**
+   * Get users.
+   * @returns the array of User
+   */
   @Get()
   getUsers() {
     return this.userService.findAll();
   }
 
   /**
-   * @param {registerUserDto} dto for user registration 
+   * Register a user.
+   * @param {registerUserDto} dto for user registration
+   * @returns the user
    */
   @Post()
   async register(@Body() registerUserDto: RegisterUserDto) {
@@ -341,6 +361,11 @@ export class UserController {
     return user;
   }
 
+  /**
+   * verify user email.
+   * @param {Query} the email token in query
+   * @returns the message for verification
+   */
   @Get(&#x27;/emailVerifications&#x27;)
   async verifyEmail(@Query() query) {
     return this.userService.verifyEmail(query);

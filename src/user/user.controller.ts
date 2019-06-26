@@ -11,13 +11,19 @@ export class UserController {
     private readonly userService: UserService,
   ) {}
 
+  /**
+   * Get users.
+   * @returns the array of User
+   */
   @Get()
   getUsers() {
     return this.userService.findAll();
   }
 
   /**
-   * @param {registerUserDto} dto for user registration 
+   * Register a user.
+   * @param {registerUserDto} dto for user registration
+   * @returns the user
    */
   @Post()
   async register(@Body() registerUserDto: RegisterUserDto) {
@@ -26,6 +32,11 @@ export class UserController {
     return user;
   }
 
+  /**
+   * verify user email.
+   * @param {Query} the email token in query
+   * @returns the message for verification
+   */
   @Get('/emailVerifications')
   async verifyEmail(@Query() query) {
     return this.userService.verifyEmail(query);
