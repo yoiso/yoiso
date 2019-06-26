@@ -276,7 +276,7 @@
 export class createUserColumn1560421973676 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise&lt;any&gt; {
-        await queryRunner.query(&quot;CREATE TABLE &#x60;user&#x60; (&#x60;id&#x60; int NOT NULL AUTO_INCREMENT, &#x60;name&#x60; text NOT NULL, &#x60;email&#x60; text NOT NULL, &#x60;phone&#x60; text NULL, &#x60;password&#x60; text NOT NULL, &#x60;isVerified&#x60; tinyint NOT NULL, &#x60;dateCreated&#x60; timestamp NULL, &#x60;dateUpdated&#x60; timestamp NULL, &#x60;dateDeleted&#x60; timestamp NULL, PRIMARY KEY (&#x60;id&#x60;)) ENGINE&#x3D;InnoDB&quot;);
+        await queryRunner.query(&quot;CREATE TABLE IF NOT EXISTS &#x60;user&#x60; (&#x60;id&#x60; int NOT NULL AUTO_INCREMENT, &#x60;name&#x60; text NOT NULL, &#x60;email&#x60; text NOT NULL, &#x60;phone&#x60; text NULL, &#x60;password&#x60; text NOT NULL, &#x60;isVerified&#x60; tinyint NOT NULL, &#x60;dateCreated&#x60; timestamp NULL, &#x60;dateUpdated&#x60; timestamp NULL, &#x60;dateDeleted&#x60; timestamp NULL, PRIMARY KEY (&#x60;id&#x60;)) ENGINE&#x3D;InnoDB&quot;);
     }
 
     public async down(queryRunner: QueryRunner): Promise&lt;any&gt; {

@@ -155,10 +155,11 @@
 import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
 import { UserController } from &#x27;./user.controller&#x27;;
 import { UserService } from &#x27;./user.service&#x27;;
+import { AccountVerification } from &#x27;./account-verification.entity&#x27;;
 import { User } from &#x27;./user.entity&#x27;;
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([AccountVerification, User])],
   controllers: [UserController],
   providers: [UserService]
 })

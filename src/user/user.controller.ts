@@ -16,6 +16,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  /**
+   * @param {registerUserDto} dto for user registration 
+   */
   @Post()
   async register(@Body() registerUserDto: RegisterUserDto) {
     const user = await this.userService.register(registerUserDto);

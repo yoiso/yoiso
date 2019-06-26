@@ -85,7 +85,12 @@
                                 <a href="#getUsers">getUsers</a>
                             </li>
                             <li>
+                                    <span class="modifier">Async</span>
                                 <a href="#register">register</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#verifyEmail">verifyEmail</a>
                             </li>
                         </ul>
                     </td>
@@ -133,8 +138,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="11"
-                            class="link-to-prism">src/user/user.controller.ts:11</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="15"
+                            class="link-to-prism">src/user/user.controller.ts:15</a></div>
                 </td>
             </tr>
 
@@ -157,6 +162,7 @@
                     <a name="register"></a>
                     <span class="name">
                         <b>
+                            <span class="modifier">Async</span>
                             register
                         </b>
                         <a href="#register"><span class="icon ion-ios-link"></span></a>
@@ -165,7 +171,8 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>register(registerUserDto: <a href="../classes/RegisterUserDto.html">RegisterUserDto</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>register(registerUserDto: <a href="../classes/RegisterUserDto.html">RegisterUserDto</a>)</code>
                 </td>
             </tr>
 
@@ -179,8 +186,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">src/user/user.controller.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="23"
+                            class="link-to-prism">src/user/user.controller.ts:23</a></div>
                 </td>
             </tr>
 
@@ -217,7 +224,82 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                        <b>Returns : </b>    <code>{}</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyEmail"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Async</span>
+                            verifyEmail
+                        </b>
+                        <a href="#verifyEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>verifyEmail(query)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;/emailVerifications&#x27;)<br /></code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">src/user/user.controller.ts:30</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>query</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>{}</code>
 
                     </div>
                     <div class="io-description">
@@ -231,24 +313,37 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Body } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Post, Body, Query } from &#x27;@nestjs/common&#x27;;
+import { ApiUseTags } from &#x27;@nestjs/swagger&#x27;;
 import { UserService } from &#x27;./user.service&#x27;;
 import { RegisterUserDto } from &#x27;./dto/register-user.dto&#x27;;
 
+@ApiUseTags(&#x27;users&#x27;)
 @Controller(&#x27;users&#x27;)
 export class UserController {
 
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+  ) {}
 
   @Get()
   getUsers() {
     return this.userService.findAll();
   }
 
+  /**
+   * @param {registerUserDto} dto for user registration 
+   */
   @Post()
-  register(@Body() registerUserDto: RegisterUserDto) {
-    console.log(registerUserDto);
-    return this.userService.register(registerUserDto);
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    const user &#x3D; await this.userService.register(registerUserDto);
+    this.userService.sendVerificationEmail(user);
+    return user;
+  }
+
+  @Get(&#x27;/emailVerifications&#x27;)
+  async verifyEmail(@Query() query) {
+    return this.userService.verifyEmail(query);
   }
 
 }
