@@ -21,15 +21,16 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const options = new DocumentBuilder()
-    .setTitle('yusosia example')
-    .setDescription('The yusosia API description')
+    .setTitle('yoiso')
+    .setDescription('Yoiso API')
     .setVersion('1.0')
-    .addTag('users')
+    .addTag('v1')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({origin: '*'});
+  app.setGlobalPrefix('v1');
 
   const config = getConfig();
   await app.listen(config.app.port);
